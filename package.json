@@ -1,0 +1,19 @@
+{
+  "name": "music",
+  "version": "0.0.0",
+  "description": "Music theory web app.",
+  "main": "docs/index.html",
+  "scripts": {
+    "test": "",
+    "build:compile": "",
+    "build:minify": "",
+    "build": "npm run build:compile && npm run build:minify",
+    "postbuild": "npm version patch --git-tag-version=false",
+    "clean": "rm docs/*"
+  },
+  "author": "Cory McCartan",
+  "repository": "https://github.com/CoryMcCartan/music",
+  "license": "ISC",
+  "devDependencies": {
+  }
+}
