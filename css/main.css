@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+.keyboard {
+    position: absolute;
+    bottom: 0;
+}
+
+.chord-input-wrapper {
+    margin-top: 0;
+    margin-bottom: -0.5em;
+}
