@@ -1,5 +1,13 @@
+import createEventInterface from "./util"
+import theory from "teoria"
+
 let mode = "Flat";
+
 let chordInput;
+let events = createEventInterface();
+
+let last = "";
+
 
 function changeMode() {
     mode = (mode === "Flat") ? "Sharp" : "Flat";
@@ -35,15 +43,41 @@ function deleteNote() {
         chordInput.parent().removeClass("is-dirty");
 }
 
-function setupHandlers() {
+function addChord() {
+    let text = chordInput.val().trim();
+    chordInput.val("");
+    chordInput.parent().removeClass("is-dirty");
+
+    if (text.trim() === "") text = last;
+    else last = text;
+
+    let adjtext = text.replace(/♭/g, "b")
+                      .replace(/♯/g, "#");
+
+    let chord = theory.chord(adjtext);
+    let sliceIndex = chord.name.indexOf(chord.symbol);
+    let root = text.slice(0, sliceIndex).trim();
+    let symbols = text.slice(sliceIndex).trim().split(" ");
+    let symbolText = symbols.map(s => ["maj", "min", "sus"].includes(s) ? s : `<sup>${s}</sup>`);
+    let HTML = `<span class="chord">${root} ${symbolText.join("")}</span>`;
+
+    $(".tune").append(HTML);
+
+    events.dispatch("addChord", chord);   
+}
+
+function setup() {
     chordInput = $("#chord-input");
 
     $("#mode").on("click", changeMode);
 
     $(".keyboard button.type").on("click", addNote);
     $("#del").on("click", deleteNote);
+    $("#next").on("click", addChord);
+    chordInput.on("keypress", e => e.keyCode === 13 ? addChord() : true);
 }
 
 export default {
-    setupHandlers,
+    setup,
+    addListener: events.addEventListener,
 };

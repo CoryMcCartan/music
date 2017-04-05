@@ -6,8 +6,55 @@
     position: absolute;
     bottom: 0;
 }
+.keyboard .row {
+    display: flex;
+    margin-bottom: 0.5em;
+    width: 100vw;
+}
+
+.keyboard .type {
+    flex: 1 1 16%;
+    margin-left: 0.5em;
+    background-color: #ffc107;
+    min-width: 0px;
+    padding: 0;
+}
+.keyboard .type:last-child {
+    margin-right: 0.5em;
+}
+
+.keyboard .add {
+    background-color: #f44336;
+}
+.keyboard #del {
+    margin-left: 0.5em;
+    flex-basis: 33%;
+    background-color: #ffc107;
+}
+.keyboard #next {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    flex-basis: 67%;
+    background-color: #536dfe;
+}
 
 .chord-input-wrapper {
-    margin-top: 0;
-    margin-bottom: -0.5em;
+    margin: 0 0 -0.5em 0.5em;
+    width: calc(100vw - 1em);
+}
+
+.tune {
+    margin: 1em;
+    width: calc(100vw - 2em);
+}
+.chord {
+    font-family: "Marker Felt", sans-serif;
+    margin-right: 1em;
+    font-size: 1.4rem;
+}
+
+@media (min-width: 960px) {
+    .keyboard .row {
+        display: none;
+    }
 }

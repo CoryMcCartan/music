@@ -27,44 +27,54 @@
         <div class="page-content">
             <div class="tune"></div>
 
-            <div class="keyboard mdl-grid">
-                <div class="chord-input-wrapper mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
+            <div class="keyboard">
+                <div class="chord-input-wrapper mdl-textfield mdl-js-textfield">
                     <input class="mdl-textfield__input" type="text" id="chord-input">
                     <label class="mdl-textfield__label" for="chord-box">Chord</label>
                 </div>
 
-                <button id="note-C"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">C</button>
-                <button id="note-Cs" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">D&flat;</button>
-                <button id="note-D"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">D</button>
-                <button id="note-Ds" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">E&flat;</button>
-                <button id="note-E"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">E</button>
-                <button id="note-F"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">F</button>
-                <button id="note-Fs" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">G&flat;</button>
-                <button id="note-G"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">G</button>
-                <button id="note-Gs" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">A&flat;</button>
-                <button id="note-A"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">A</button>
-                <button id="note-As" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">B&flat;</button>
-                <button id="note-B"  class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">B</button>
+                <div class="row">
+                    <button id="note-C"  class="type note mdl-button mdl-js-button mdl-button--raised">C</button>
+                    <button id="note-Cs" class="type note mdl-button mdl-js-button mdl-button--raised">D&flat;</button>
+                    <button id="note-D"  class="type note mdl-button mdl-js-button mdl-button--raised">D</button>
+                    <button id="note-Ds" class="type note mdl-button mdl-js-button mdl-button--raised">E&flat;</button>
+                    <button id="note-E"  class="type note mdl-button mdl-js-button mdl-button--raised">E</button>
+                    <button id="note-F"  class="type note mdl-button mdl-js-button mdl-button--raised">F</button>
+                </div>
+                <div class="row">
+                    <button id="note-Fs" class="type note mdl-button mdl-js-button mdl-button--raised">G&flat;</button>
+                    <button id="note-G"  class="type note mdl-button mdl-js-button mdl-button--raised">G</button>
+                    <button id="note-Gs" class="type note mdl-button mdl-js-button mdl-button--raised">A&flat;</button>
+                    <button id="note-A"  class="type note mdl-button mdl-js-button mdl-button--raised">A</button>
+                    <button id="note-As" class="type note mdl-button mdl-js-button mdl-button--raised">B&flat;</button>
+                    <button id="note-B"  class="type note mdl-button mdl-js-button mdl-button--raised">B</button>
+                </div>
 
-                <button id="dim" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">&#9675;</button>
-                <button id="augmented" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">+</button>
-                <button id="sharp" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">&sharp;</button>
-                <button id="flat" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">&flat;</button>
-                <button id="major" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">maj</button>
-                <button id="minor" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">min</button>
-                <button id="sus" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">sus</button>
-                <button id="add6" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">6</button>
-                <button id="add7" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">7</button>
-                <button id="add9" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">9</button>
-                <button id="add11" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">11</button>
-                <button id="add13" class="type mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-cell mdl-cell--1-col">13</button>
+                <div class="row">
+                    <button id="dim" class="type add mdl-button mdl-js-button mdl-button--raised">&#9675;</button>
+                    <button id="augmented" class="type add mdl-button mdl-js-button mdl-button--raised">+</button>
+                    <button id="sharp" class="type add mdl-button mdl-js-button mdl-button--raised">&sharp;</button>
+                    <button id="flat" class="type add mdl-button mdl-js-button mdl-button--raised">&flat;</button>
+                    <button id="major" class="type add mdl-button mdl-js-button mdl-button--raised">maj</button>
+                    <button id="minor" class="type add mdl-button mdl-js-button mdl-button--raised">min</button>
+                </div>
+                <div class="row">
+                    <button id="sus" class="type add mdl-button mdl-js-button mdl-button--raised">sus</button>
+                    <button id="add6" class="type add mdl-button mdl-js-button mdl-button--raised">6</button>
+                    <button id="add7" class="type add mdl-button mdl-js-button mdl-button--raised">7</button>
+                    <button id="add9" class="type add mdl-button mdl-js-button mdl-button--raised">9</button>
+                    <button id="add11" class="type add mdl-button mdl-js-button mdl-button--raised">11</button>
+                    <button id="add13" class="type add mdl-button mdl-js-button mdl-button--raised">13</button>
+                </div>
 
-                <button id="del" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--1-col">
-                    <i class="material-icons" style="font-size: 1em">arrow_backward</i>
-                </button>
-                <button id="next" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-cell mdl-cell--3-col">
-                    <i class="material-icons" style="font-size: 1em">arrow_forward</i>
-                </button>
+                <div class="row">
+                    <button id="del" class="mdl-button mdl-js-button mdl-button--raised">
+                        <i class="material-icons" style="font-size: 1em">arrow_backward</i>
+                    </button>
+                    <button id="next" class="mdl-button mdl-js-button mdl-button--raised">
+                        <i class="material-icons" style="font-size: 1em">arrow_forward</i>
+                    </button>
+                </div>
             </div>
         </div>
         </main>
