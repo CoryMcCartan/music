@@ -2903,7 +2903,7 @@ Scale.prototype = {
 };
 Scale.KNOWN_SCALES = Object.keys(scales);
 
-var scale$1 = Scale;
+var scale = Scale;
 
 var sugar = function(teoria) {
   var Note = teoria.Note;
@@ -2972,9 +2972,9 @@ function chordConstructor(name, symbol) {
   throw new Error('Invalid Chord. Couldn\'t find note name');
 }
 
-function scaleConstructor(tonic, scale) {
+function scaleConstructor(tonic, scale$$1) {
   tonic = (tonic instanceof note) ? tonic : teoria.note(tonic);
-  return new scale$1(tonic, scale);
+  return new scale(tonic, scale$$1);
 }
 
 var teoria = {
@@ -2988,7 +2988,7 @@ var teoria = {
 
   Note: note,
   Chord: chord,
-  Scale: scale$1,
+  Scale: scale,
   Interval: interval$1
 };
 
@@ -3026,6 +3026,7 @@ function createEventInterface() {
 let mode = "Flat";
 
 let chordInput;
+let tuneInput;
 let events = createEventInterface();
 
 let last = "";
@@ -3068,6 +3069,7 @@ function deleteNote() {
 function addChord() {
     let text = chordInput.val().trim();
     chordInput.val("");
+    chordInput.parent().removeClass("is-dirty");
 
     if (text.trim() === "") text = last;
     else last = text;
@@ -3076,19 +3078,30 @@ function addChord() {
                       .replace(/♯/g, "#");
 
     let chord = index.chord(adjtext);
-    let sliceIndex = chord.name.indexOf(chord.symbol);
-    let root = text.slice(0, sliceIndex).trim();
-    let symbols = text.slice(sliceIndex).trim().split(" ");
-    let symbolText = symbols.map(s => ["maj", "min", "sus"].includes(s) ? s : `<sup>${s}</sup>`);
-    let HTML = `<span class="chord">${root} ${symbolText.join("")}</span>`;
+
+    addChordObject(chord);
+}
+
+function addChordObject(chord) {
+    let HTML = `<span class="chord">${chord.name}</span>`;
 
     $(".tune").append(HTML);
 
     events.dispatch("addChord", chord);   
 }
 
+function setChords(chords) {
+    if (chords.length === 0) {
+        $(".tune").html("Song not found.");
+    } else {
+        $(".tune").html(null);
+        chords.forEach(addChordObject);
+    }
+}
+
 function setup() {
     chordInput = $("#chord-input");
+    tuneInput = $("#tune-name");
 
     $("#mode").on("click", changeMode);
 
@@ -3096,19 +3109,78 @@ function setup() {
     $("#del").on("click", deleteNote);
     $("#next").on("click", addChord);
     chordInput.on("keypress", e => e.keyCode === 13 ? addChord() : true);
+    
+    tuneInput.on("keypress", e => {
+        if (e.keyCode === 13) {
+            events.dispatch("tuneSearch", tuneInput.val()); 
+            // clear
+            $(".tune").html(null);
+            tuneInput.val(null);
+            tuneInput.parent().removeClass("is-dirty");
+        } else {
+            return true;
+        }
+    });
 }
 
 var UI = {
     setup,
+    setChords,
     addListener: events.addEventListener,
 };
 
-let scale = index.note("c#4").scale("major").simple();
-console.log(scale.join(" "));
+let headers = new Headers({
+    "Guitarparty-Api-Key": "a7b0f238002170fbc4a2705be74eada15a712ca2",
+});
+
+let fetch_init = {
+    method: "GET",
+    headers,
+};
+
+async function getChords(title) {
+    let url = `http://api.guitarparty.com/v2/songs/?query=${title}`;
+    let response = await fetch(url, fetch_init);
+    let data = await response.json();
+    if (data.objects.length === 0) return [];
+
+    // try to find exact title match
+    let song;
+    let index$$1 = data.objects.map(o => o.title).indexOf(title);
+
+    if (index$$1 >= 0)
+        song = data.objects[index$$1];
+    else
+        song = data.objects[0]; // default to first
+
+    let chords = song.body.match(/\[[\w\/]+\]/g) // get chords in brackets
+                    .map(ch => ch.slice(1, -1)) // remove brackets
+                    .map(index.chord);
+
+    // check transpositions
+    let capo = /Capo (\d)/i.exec(song.body);
+    if (!!capo) {
+        let interval = index.interval(index.note.fromKey(0),
+                index.note.fromKey(+capo[1]));
+
+        chords.map(ch => ch.transpose(interval));
+    }
+
+    return chords;
+}
+
+var chords = {
+    getChords,
+};
 
 UI.setup();
 
-UI.addListener("addChord", e => console.log(e));
+UI.addListener("tuneSearch", name => {
+    chords.getChords(name).then(UI.setChords);
+});
+
+// global exports
+window.chords = chords;
 window.theory = index;
 
 }());

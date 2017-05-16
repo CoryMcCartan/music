@@ -4,6 +4,7 @@ import theory from "teoria"
 let mode = "Flat";
 
 let chordInput;
+let tuneInput;
 let events = createEventInterface();
 
 let last = "";
@@ -55,19 +56,30 @@ function addChord() {
                       .replace(/♯/g, "#");
 
     let chord = theory.chord(adjtext);
-    let sliceIndex = chord.name.indexOf(chord.symbol);
-    let root = text.slice(0, sliceIndex).trim();
-    let symbols = text.slice(sliceIndex).trim().split(" ");
-    let symbolText = symbols.map(s => ["maj", "min", "sus"].includes(s) ? s : `<sup>${s}</sup>`);
-    let HTML = `<span class="chord">${root} ${symbolText.join("")}</span>`;
+
+    addChordObject(chord);
+}
+
+function addChordObject(chord) {
+    let HTML = `<span class="chord">${chord.name}</span>`;
 
     $(".tune").append(HTML);
 
     events.dispatch("addChord", chord);   
 }
 
+function setChords(chords) {
+    if (chords.length === 0) {
+        $(".tune").html("Song not found.");
+    } else {
+        $(".tune").html(null);
+        chords.forEach(addChordObject);
+    }
+}
+
 function setup() {
     chordInput = $("#chord-input");
+    tuneInput = $("#tune-name");
 
     $("#mode").on("click", changeMode);
 
@@ -75,9 +87,22 @@ function setup() {
     $("#del").on("click", deleteNote);
     $("#next").on("click", addChord);
     chordInput.on("keypress", e => e.keyCode === 13 ? addChord() : true);
+    
+    tuneInput.on("keypress", e => {
+        if (e.keyCode === 13) {
+            events.dispatch("tuneSearch", tuneInput.val()) 
+            // clear
+            $(".tune").html(null);
+            tuneInput.val(null);
+            tuneInput.parent().removeClass("is-dirty");
+        } else {
+            return true;
+        }
+    });
 }
 
 export default {
     setup,
+    setChords,
     addListener: events.addEventListener,
 };
