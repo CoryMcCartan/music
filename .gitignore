@@ -1,4 +1,6 @@
 *.tmp
 *.bak
 *.swp
-node_modules/
+_site/
+.jekyll-metadata
+.sass_cache/
