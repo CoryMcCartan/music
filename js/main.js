@@ -27,6 +27,16 @@ async function loadTune(name) {
 function displayTune(abc) {
     $(".sheet-music").remove();
 
+    abc = abc
+        .replace(/maj/g, "∆")
+        .replace(/([A-G])m/g, "$1-")
+        .replace(/b5/g, "♭5")
+        .replace(/b9/g, "♭9")
+        .replace(/b13/g, "♭13")
+        .replace(/#5/g, "♯5")
+        .replace(/#9/g, "♯9")
+        .replace(/#11/g, "♯11");
+
     let output = document.createElement("svg");
     output.className = "sheet-music";
 
@@ -37,7 +47,6 @@ function displayTune(abc) {
         paddingbottom: 0,
         paddingleft: 0,
         paddingright: 0,
-        editable: true,
         add_classes: true,
         responsive: "resize",
     });
@@ -47,6 +56,7 @@ function displayTune(abc) {
     $("#music").append(output);
     $(".sheet-music tspan").attr("dy", 0);
     $("title").html($(".sheet-music .title").text());
+    $(".sheet-music tspan").attr("dy", 0);
 }
 
 
