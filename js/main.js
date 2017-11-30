@@ -7,8 +7,9 @@ function onLoad(e) {
     } else {
         $("#tune-list").show();
         $(".sheet-music").remove();
+        $("title").html($("h1").html().trim());
 
-        $("#tune-list a").on("click", function() {
+        $("#tune-list li a").on("click", function() {
             loadTune(this.dataset.name);
         });
     }
@@ -31,7 +32,7 @@ function displayTune(abc) {
 
     let width = Math.min(800, document.body.getBoundingClientRect().width);
     ABCJS.renderAbc(output, abc, {}, {
-        scale: 1.0,
+        scale: innerWidth <= 600 ? 1.25 : 1.0,
         paddingtop: 15,
         paddingbottom: 0,
         paddingleft: 0,
@@ -42,8 +43,10 @@ function displayTune(abc) {
     });
     smarten(output);
 
+
     $("#music").append(output);
     $(".sheet-music tspan").attr("dy", 0);
+    $("title").html($(".sheet-music .title").text());
 }
 
 

@@ -1,13 +1,16 @@
 X: 1
 T: It's the Most Wonderful Time of the Year
 M: 3/4
-K: none
-L: 3/4
-^F1/3 G1/3 |: "Dmaj7"x | x | "G/A" x | x | "Dmaj7 (D6/9)"x | x | "G/A" x | x |
-"Em7"x | "Em6"x | "F#m7"x | "D/F#"x | "Gmaj7"x | x | "Abdim7"x | x |
-[1 "Dmaj7"x | x | "G/A" x | x | "Dm7/G"x | x | "Em7/A" x | x :|
-[2 "D/A"x | x | "Em7/A" x | x | "Am7"x | x | x | "D7" x ||
-"Gmaj7"x | "Abdim7"x | "D/A"x | "Bm7"x | "Em7"x | "Em7/A"x | "Dmaj7"x | x |
-"Gm7"x | "C7"x | "Fmaj7"x | "Dm7"x | "Em7b5"x | "Bb7"x |
-"G/A"x | x | "A6"x | x | "G/A"x | x | "A6"x | x !D.C.!||
-[3 "D/A"x | x | "Em7/A" x | "A7"x | "D"x | x | x | x |]
+K: D
+L: 1/4
+FG|"Dmaj7"A3|AdB|"G/A"A3-|AGE|
+"Dmaj7(D6/9)"D3-|D3-|"G/A"D3|zEF|
+"Em7"GEE|"Em6"EFG|"F#m7"AFF|"D/F#"FGA|
+"Gmaj7"BGB|d3-|"Abdim7"d3|zcB|
+[1"Dmaj7"A3|AdB|"G/A"A3-|AGE|"Dm7/G"D3-|D3-|"Em7/A"D3|"A7"z:|
+[2"D/A"A3|AdB|"Em7/A"A3-|AGE|"Am7"=c3-|c3-|c3|"D7"z=cc||
+"Gmaj7"BBB|"Abdim7"BcB|"D/A"AAA|"Bm7"AdA|
+"Em7"GGG|"Em7/A"GBG|"Dmaj7"F3|zDD|
+"Gm7"_BBB|"C7"B=cB|"Fmaj7"AAA|"Dm7"A_BA|"Em7b5"GGG|"Bb7"GFG|
+"G/A"A3-|"A6"A3-|"G/A"A3|"A6"z!D.C.!||
+[3"D/A"A3|AdB|"Em7/A"A3-|"A7"Ace|"D"d3-|d3-|d3-|d3|]
