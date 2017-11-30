@@ -43,7 +43,7 @@ function displayTune(abc) {
     smarten(output);
 
     $("#music").append(output);
-    $(".sheet-music tspan").attr("dy", 16);
+    $(".sheet-music tspan").attr("dy", 0);
 }
 
 

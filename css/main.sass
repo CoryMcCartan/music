@@ -63,16 +63,27 @@ svg
     overflow: visible !important
 
     .chord
-        transform: translate(0.5em, 0)
-        font-family: "Caveat Brush", "Comic Sans MS", cursive
-        font-size: 20px
+        transform: translate(0.5em, 0.75em)
+        font-family: "Caveat Brush", "Helvetica Neue", "Arial Unicode MS",
+        font-size: 24px
+
+    .annotation, .triplet
+        font-family: $font
 
     .title
         font-family: $font
-        transform: translate(0, -1em)
-        font-size: 1.5rem
+        transform: translate(0, -0.25em)
+        font-size: 2rem
         font-weight: bold
         text-transform: uppercase
+
+    text.ending
+        transform: translate(-0.6em, 0.75em)
+        font-weight: bold
+
+    path.ending
+        transform: translate(-0.6em, -0.25em)
+
 
 a
     text-decoration: none
