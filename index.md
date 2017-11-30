@@ -1,7 +1,20 @@
 ---
-title: Cory's Music
+title: Music
 ---
 
-[Fiddle]({{site.baseurl}}/fiddle)
+<ul id="tune-list">
+    {% for file in site.static_files %}
+        {% assign pageurl = page.url | replace: 'index.html', '' %}
+        {% if file.path contains pageurl and file.extname == ".abc" %}
+            {% assign name = file.basename | replace: '_', ' ' %}
+            <li>
+                <a href="#{{ name }}" data-name="{{ name }}">
+                    {{ name | smartify }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
 
-[Other]({{site.baseurl}}/other)
+<section id="music">
+</section>

@@ -8,25 +8,76 @@ $font: "Playfair Display", "Palatino", serif
     box-sizing: border-box
 
 body
-    background: #eee
+    background: #fcfcf7
     font-family: $font
     font-size: 12pt
-    margin: 0 2em
-
-h1
-    text-align: center
     margin: 0
+    overflow-x: hidden
+
+nav 
+    h1
+        text-align: center
+        margin: 0
+        padding: 0.4rem 0 0.5rem
+        background: #b03040
+        color: white
+        font-size: 2rem
+        transition: all 150ms
+
+    h1:hover
+        background: #bb4040
+
+    a:hover, a:active
+        text-decoration: none
+
+#tune-list
+    margin: 0
+    padding: 0.5em
+    
+    li
+        display: block
+        background: white
+        margin: 0.5em 0
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2)
+        border-radius: 3px
+
+    a
+        display: block
+        padding: 1em
+
+    a::after
+        content: "›"
+        float: right
+        font-family: arial
+        font-weight: bold
+        color: #777
+        
+
+#music
+    display: flex
+    margin: 0.75em
+    justify-content: center
+
+svg
+    max-width: 640px
+    overflow: visible !important
+
+    .chord
+        transform: translate(0.5em, 0)
+        font-family: "Caveat Brush", "Comic Sans MS", cursive
+        font-size: 20px
+
+    .title
+        font-family: $font
+        transform: translate(0, -1em)
+        font-size: 1.5rem
+        font-weight: bold
+        text-transform: uppercase
 
 a
     text-decoration: none
     color: black
 
+
 a:hover, a:active
     text-decoration: underline
-
-svg
-    max-width: 640px
-
-    text
-        font-family: $font
-

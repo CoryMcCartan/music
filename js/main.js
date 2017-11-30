@@ -1,11 +1,18 @@
-document.addEventListener("DOMContentLoaded", function(e) {
+function onLoad(e) {
     let tuneName = location.hash.slice(1);
-    if (tuneName.length > 0) loadTune(tuneName);
 
-    $("#tune-list a").on("click", function() {
-        loadTune(this.dataset.name);
-    });
-});
+    if (tuneName.length > 0) {
+        $("#tune-list").hide();
+        loadTune(tuneName);
+    } else {
+        $("#tune-list").show();
+        $(".sheet-music").remove();
+
+        $("#tune-list a").on("click", function() {
+            loadTune(this.dataset.name);
+        });
+    }
+}
 
 async function loadTune(name) {
     name = decodeURI(name).replace(/ /g, "_");
@@ -17,24 +24,26 @@ async function loadTune(name) {
 }
 
 function displayTune(abc) {
-    $("#tune-list").remove();
+    $(".sheet-music").remove();
 
     let output = document.createElement("svg");
     output.className = "sheet-music";
 
     let width = Math.min(800, document.body.getBoundingClientRect().width);
     ABCJS.renderAbc(output, abc, {}, {
-        scale: 1.1,
-        paddingtop: 5,
+        scale: 1.0,
+        paddingtop: 15,
         paddingbottom: 0,
         paddingleft: 0,
         paddingright: 0,
+        editable: true,
         add_classes: true,
         responsive: "resize",
     });
     smarten(output);
 
-    document.body.append(output);
+    $("#music").append(output);
+    $(".sheet-music tspan").attr("dy", 16);
 }
 
 
@@ -60,3 +69,8 @@ function smarten(el) {
         el.innerHTML = rep(el.innerHTML);
     }
 };
+
+
+// Listeners
+document.addEventListener("DOMContentLoaded", onLoad);
+window.addEventListener("hashchange", onLoad);
