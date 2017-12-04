@@ -9,7 +9,7 @@ function onLoad(e) {
     $(".search").on("keypress", function(e) {
         if (e.keyCode !== 13) return;
         $("#tune-list a").get(0).click()
-    }).focus();
+    });
 }
 
 document.addEventListener("DOMContentLoaded", onLoad);
