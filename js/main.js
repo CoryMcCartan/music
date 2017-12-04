@@ -1,41 +1,64 @@
 function onLoad(e) {
-    let tuneName = location.hash.slice(1);
+    let tunePath = location.hash.slice(1);
 
-    if (tuneName.length > 0) {
+    if (tunePath.length > 0) {
         $("#tune-list").hide();
-        loadTune(tuneName);
+        $("#extra-links").hide();
+        loadTune(tunePath);
     } else {
         $("#tune-list").show();
+        $("#extra-links").show();
         $(".sheet-music").remove();
         $("title").html($("h1").html().trim());
 
         $("#tune-list li a").on("click", function() {
-            loadTune(this.dataset.name);
+            loadTune(this.dataset.path);
         });
+
+        let list = new List("tune-list", {
+            valueNames: ["name", "category"],
+        });
+        list.sort("name");
+
+        $(".search").on("keypress", function(e) {
+            if (e.keyCode !== 13) return;
+            $("#tune-list a").get(0).click()
+        }).focus();
     }
 }
 
-async function loadTune(name) {
-    name = decodeURI(name).replace(/ /g, "_");
-    let filename = `${location.pathname}tunes/${name}.abc`;
-    let request = await fetch(filename);
+async function loadTune(path) {
+    category = path.split("/")[0];
+    path = `tunes/${path}.abc`;
+
+    let request = await fetch(path);
     let abc = await request.text();
 
-    displayTune(abc);
+    displayTune(abc, category);
 }
 
-function displayTune(abc) {
+function displayTune(abc, category) {
     $(".sheet-music").remove();
 
-    abc = abc
+    // add extra line for proper spacing
+    let lines = abc.trim().split("\n");
+    let music_lines = lines.reduce((p, l) => p + l.includes("|"), 0);
+
+    let split = lines.length - music_lines
+    let header = lines.slice(0, split).join("\n")
+
+    let music = lines.slice(split).join("\n")
+    music = music
         .replace(/maj/g, "∆")
-        .replace(/([A-G])m/g, "$1-")
+        .replace(/([A-G][#b]?)m/g, "$1-")
         .replace(/b5/g, "♭5")
         .replace(/b9/g, "♭9")
         .replace(/b13/g, "♭13")
         .replace(/#5/g, "♯5")
         .replace(/#9/g, "♯9")
         .replace(/#11/g, "♯11");
+
+    abc = header + "\n" + music + "\n|";
 
     let output = document.createElement("svg");
     output.className = "sheet-music";
@@ -52,11 +75,14 @@ function displayTune(abc) {
     });
     smarten(output);
 
-
     $("#music").append(output);
+    // cleanup
     $(".sheet-music tspan").attr("dy", 0);
     $("title").html($(".sheet-music .title").text());
     $(".sheet-music tspan").attr("dy", 0);
+    $(".l" + music_lines).css("display", "none");
+    if (category === "jazz" | category === "christmas") 
+        $(".chord").addClass("jazz");
 }
 
 

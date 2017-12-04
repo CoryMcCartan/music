@@ -2,19 +2,28 @@
 title: Music
 ---
 
-<ul id="tune-list">
+<section id="tune-list">
+<input class="search" placeholder="Search" />
+<ul class="list">
     {% for file in site.static_files %}
-        {% assign pageurl = page.url | replace: 'index.html', '' %}
+        {% assign pageurl = page.url | remove: 'index.html' %}
+        {% assign tunesurl = page.url | append: 'tunes/' %}
         {% if file.path contains pageurl and file.extname == ".abc" %}
             {% assign name = file.basename | replace: '_', ' ' %}
+            {% assign category = file.path | remove: file.name | remove_first: tunesurl | remove: '/' %}
+            {% assign path = category | append: '/' | append: file.basename %}
             <li>
-                <a href="#{{ name }}" data-name="{{ name }}">
+                <a class="name" href="#{{ path }}" data-path="{{ path }}">
                     {{ name | smartify }}
                 </a>
+                <span class="category {{ category }}">{{ category | upcase}}</span>
             </li>
         {% endif %}
     {% endfor %}
+</ul>
+</section>
 
+<section id="extra-links">
 <b>
     <a href="http://www.ralphpatt.com/Song.html" target="_blank">
         Jazz Fakebook
@@ -32,12 +41,8 @@ title: Music
         Edit Tunes
     </a>
 </i>
+</section>
 
-
-</ul>
 
 <section id="music">
 </section>
-
-<div>
-</div>

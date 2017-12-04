@@ -30,29 +30,60 @@ nav
     a:hover, a:active
         text-decoration: none
 
-#tune-list
+input.search
+    padding: 0.75em
+    margin: 0.5em 0.6em 0
+    width: calc(100vw - 1.2em)
+    font-family: $font
+    outline: none
+    border: 1px solid #ccc
+
+#tune-list > ul
     margin: 0
     padding: 0.5em
     
     li
-        display: block
+        display: flex
+        align-items: center
         background: white
         margin: 0.5em 0
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.2)
         border-radius: 3px
 
     a
-        display: block
+        flex-grow: 1
         padding: 1em
 
-    a::after
+    li::after
         content: "›"
-        float: right
+        margin: 1em
         font-family: arial
         font-weight: bold
         color: #777
-        
 
+.category
+    font-size: 0.6em
+    padding: 0.35em 0.5em 0.25em
+    font-family: "Courier", "Courier New", monospace
+    font-weight: bold
+    border-radius: 3px
+    color: white
+
+.category.christmas
+    background: #c00
+.category.fiddle
+    background: #47e
+.category.other
+    background: #888
+.category.jazz
+    background: #cc0
+    color: black
+
+#extra-links a
+    display: block
+    padding: 1em
+
+        
 #music
     display: flex
     margin: 0.75em
@@ -63,10 +94,15 @@ svg
     overflow: visible !important
 
     .chord
+        transform: translate(-0.2em, 0.85em)
+        font-family: "Courier", "Helvetica Neue", "Arial Unicode MS",
+        font-size: 18px
+        text-anchor: start !important
+
+    .chord.jazz
         transform: translate(-0.2em, 0.75em)
         font-family: "Caveat Brush", "Helvetica Neue", "Arial Unicode MS",
-        font-size: 25px
-        text-anchor: start !important
+        font-size: 24px
 
     .annotation, .triplet
         font-family: $font
