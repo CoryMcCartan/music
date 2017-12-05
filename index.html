@@ -2,7 +2,8 @@
 ---
 
 <section id="tune-list">
-    <input class="search" placeholder="Search" />
+    <input class="search" placeholder="Search" type="search" 
+        autocomplete="off" spellcheck="false" autocorrect="off"/>
     <ul class="list">
         {% for file in site.static_files %}
             {% assign pageurl = page.url | remove: 'index.html' %}
