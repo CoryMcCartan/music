@@ -1,0 +1,20 @@
+{
+    "short_name": "Music",
+    "name": "Music",
+    "icons": [
+        {
+            "src": "assets/icon.png",
+            "type": "image/png",
+            "size": "512x512"
+        },
+        {
+            "src": "assets/icon_64.png",
+            "type": "image/png",
+            "size": "64x64"
+        }
+    ],
+    "start_url": "/music/",
+    "background_color": "#fcfcf7",
+    "theme_color": "#bb4040",
+    "display": "standalone"
+}
