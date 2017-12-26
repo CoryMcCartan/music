@@ -22,9 +22,10 @@ function displayTune(abc, category) {
     // add extra line for proper spacing
     let lines = abc.trim().split("\n");
     let music_lines = lines.reduce((p, l) => p + l.includes("|"), 0);
-    let lyric_lines = lines.reduce((p, l) => p + l.includes("w: "), 0);
+    let continuation_lines = lines.reduce((p, l) => p + l.endsWith("|\\"), 0);
+    music_lines -= continuation_lines;
 
-    let split = lines.length - music_lines - lyric_lines
+    let split = lines.map(l => l.includes("|")).indexOf(true);
     let header = lines.slice(0, split).join("\n")
 
     let music = lines.slice(split).join("\n")
