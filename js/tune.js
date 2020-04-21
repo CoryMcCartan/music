@@ -6,6 +6,8 @@ function onLoad(e) {
     }
 
     loadTune(tunePath);
+
+    $("#play").on("click", playTune);
 }
 
 async function loadTune(path) {
@@ -26,7 +28,7 @@ function displayTune(abc, category) {
     music_lines -= continuation_lines;
 
     let split = lines.map(l => l.includes("|")).indexOf(true);
-    let header = lines.slice(0, split).join("\n")
+    let header = lines.slice(0, split).join("\n") + "\n%%MIDI program 40";
 
     let music = lines.slice(split).join("\n")
     music = music
@@ -41,12 +43,13 @@ function displayTune(abc, category) {
         .replace(/#11/g, "♯11");
 
     abc = header + "\n" + music + "\n|";
+    window.abc = abc;
 
     let output = document.createElement("svg");
     output.className = "sheet-music";
 
     let width = Math.min(800, document.body.getBoundingClientRect().width);
-    ABCJS.renderAbc(output, abc, {}, {
+    window.rendered = ABCJS.renderAbc(output, abc, {}, {
         scale: innerWidth <= 600 ? 1.25 : 1.0,
         paddingtop: 15,
         paddingbottom: 0,
@@ -60,11 +63,27 @@ function displayTune(abc, category) {
     $("#music").html(output);
     // cleanup
     $(".sheet-music tspan").attr("dy", 0);
-    $("title").html($(".sheet-music .title").text());
-    $(".sheet-music tspan").attr("dy", 0);
-    $(".l" + music_lines).css("display", "none");
+    $(".sheet-music tspan:nth-child(2)").attr("dy", 15);
+    $("title").html($(".sheet-music .abcjs-title").text());
+    $(".abcjs-l" + music_lines).css("display", "none");
     if (category === "jazz" | category === "christmas") 
-        $(".chord").addClass("jazz");
+        $(".abcjs-chord").addClass("jazz");
+}
+
+async function playTune() {
+    let ctx = new AudioContext();
+    await ctx.resume();
+    window.synth = new ABCJS.synth.CreateSynth();
+    await synth.init({ 
+        audioContext: ctx, 
+        visualObj: rendered[0], 
+        millisecondsPerMeasure: 1000,
+        instrument: "harpsichord",
+        sountFontUrl: "https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/",
+    });
+    await synth.prime();
+
+    synth.start();
 }
 
 
@@ -90,6 +109,49 @@ function smarten(el) {
         el.innerHTML = rep(el.innerHTML);
     }
 };
+
+window.SynthSequence = (function() {
+	let self = {};
+	self.tracks = [];
+	self.totalDuration = 0;
+
+	self.addTrack = function() {
+		self.tracks.push([]);
+		return self.tracks.length - 1;
+	};
+
+	self.setInstrument = function(trackNumber, instrumentNumber) {
+		self.tracks[trackNumber].push({
+			channel: 0,
+			cmd: "program",
+			instrument: instrumentNumber
+		});
+	};
+
+	self.appendNote = function(trackNumber, pitch, durationInMeasures, volume) {
+		self.tracks[trackNumber].push({
+			cmd: "start",
+			pitch: pitch - 60,
+			volume: volume
+		});
+		self.tracks[trackNumber].push({
+			cmd: "move",
+			duration: durationInMeasures
+		});
+		self.tracks[trackNumber].push({
+			cmd: "stop",
+			pitch: pitch - 60
+		});
+		var duration = 0;
+		self.tracks[trackNumber].forEach(function(event) {
+			if (event.duration)
+				duration += event.duration;
+		});
+		self.totalDuration = Math.max(self.totalDuration, duration);
+	};
+    
+    return self;
+})();
 
 
 // Listeners

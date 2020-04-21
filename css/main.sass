@@ -92,44 +92,47 @@ svg
     max-width: 740px
     overflow: visible !important
 
-    .chord
+    .abcjs-chord
         transform: translate(-0.2em, 0.85em)
-        font-family: "Courier", "Helvetica Neue", "Arial Unicode MS",
+        font-family: "Courier", "Helvetica Neue", "Arial Unicode MS"
         font-size: 18px
         text-anchor: start !important
 
-    .chord.jazz
+    .abcjs-chord.jazz
         transform: translate(-0.2em, 0.75em)
-        font-family: "Caveat Brush", "Helvetica Neue", "Arial Unicode MS",
+        font-family: "Caveat Brush", "Helvetica Neue", "Arial Unicode MS"
         font-size: 24px
 
     .annotation, .triplet
         font-family: $font
 
-    .abc-lyric
-        transform: translate(0.25em, 0.75em)
+    .abcjs-lyric
+        transform: translate(0.2em, 0.6em)
         font-style: italic
         font-weight: normal
 
-    .title
+    .abcjs-lyric tspan:nth-child(2)
+        transform: translate(0em, 1em)
+
+    .abcjs-title
         font-family: $font
         transform: translate(0, -0.25em)
         font-size: 2rem
         font-weight: bold
         text-transform: uppercase
 
-    text.ending
-        transform: translate(-0.2em, 0.75em)
+    text.abcjs-ending
+        transform: translate(-0.2em, 0.4em)
         font-weight: bold
 
-    path.ending
-        transform: translate(-0.2em, -0.25em)
+    path.abcjs-ending
+        transform: translate(-0.2em, -0.15em)
 
 svg.chords-only
-    .chord
+    .abcjs-chord
         transform: translate(-0.2em, 2.3em)
 
-    .chord.jazz
+    .abcjs-chord.jazz
         transform: translate(-0.2em, 2.2em)
 
 a
