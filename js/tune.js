@@ -60,6 +60,7 @@ function displayTextTune(text, path) {
                     .replace(/\(([0-9])[xX]\)/g, "<span class='small'>($1X)</span>")
                     .replace(/([A-G])b/g, "$1♭")
                     .replace(/([A-G])#/g, "$1♯")
+                    .replace(/(\S)([A-G])/g, "$1<span class='spacer'></span>$2")
                     .replace(/b5/g, "♭5")
                     .replace(/b9/g, "♭9")
                     .replace(/b13/g, "♭13")
@@ -80,12 +81,6 @@ function displayTextTune(text, path) {
             p.innerHTML = l; 
             container.append(p);
         });
-        /*
-    window.lines = lines;
-    $("#music").html(`<div>
-                     ${lines.join("<br />")}
-                     </div>`);
-                     */
 }
 
 function displayABCTune(abc, category) {

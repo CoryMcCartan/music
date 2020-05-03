@@ -102,19 +102,13 @@ input.search
     .chords
         font-family: "Courier", "Courier Prime", "Helvetica Neue", "Arial Unicode MS", monospace
         font-size: 1.15em
-        letter-spacing: -0.8px
-        transform: scaleX(0.95);
-        width: calc(104% - 0.25em);
-        transform-origin: 0 0;
+        letter-spacing: -1px
     .chorus
         font-weight: bold
     .bridge
         font-style: italic
     .small
         font-size: 0.7em
-    .spacer
-        display: inline-block
-        width: 3px
 
 svg
     max-width: 740px
