@@ -11,16 +11,84 @@ function onLoad(e) {
 }
 
 async function loadTune(path) {
-    category = path.split("/")[0];
-    path = `../tunes/${path}.abc`;
+    let category = path.split("/")[0];
+    let type = path.split("/")[1].split(".")[1];
+    path = `../tunes/${path}`;
 
     let request = await fetch(path);
-    let abc = await request.text();
+    let text = await request.text();
 
-    displayTune(abc, category);
+    if (type == "abc")
+        displayABCTune(text, category);
+    else
+        displayTextTune(text, path);
 }
 
-function displayTune(abc, category) {
+function displayTextTune(text, path) {
+    let container = document.createElement("div");
+    $("#music").append(container);
+
+    let title = path.split("/")[3].split(".")[0].replace(/_/g, " ");
+    document.title = title;
+    let title_el = document.createElement("p");
+    title_el.className = "title";
+    title_el.innerHTML = title;
+    container.append(title_el);
+
+    let lines = text.split("\n")
+        .map(l => {
+            l = l.replace(/'/g, "&rsquo;")
+                    .replace(/" /g, "&rdquo; ")
+                    .replace(/"$/g, "&rdquo;")
+                    .replace(/_(\w)/g, "<span style='text-decoration: underline;'>$1</span>")
+                    .replace(/"/g, "&ldquo;");
+            let p = document.createElement("p");
+
+            if (l[0] == "#") {
+                l = l.slice(1)
+                    .replace(/( +)?-( +)?/g, " - ")
+                    .replace(/,/g, "<span style='text-shadow: 0 1px 0 black;'>&darr;</span>")
+                    .replace(/\/\//g, `<span style='letter-spacing: -6px; top: 3px;
+                             font-weight: bold; font-size: 1.2em;'>//</span>`)
+                    .replace(/ \/( |$)/g, `<span style='font-weight: bold; top: 3px;
+                             font-size: 1.2em; padding: 0 0.3em;'>/</span>`)
+                    .replace(/ \)/g, ")")
+                    .replace(/\( /g, "(")
+                    .replace(/~/g, "/")
+                    .replace(/maj/g, "∆")
+                    .replace(/dim/g, "°")
+                    .replace(/\(([0-9])[xX]\)/g, "<span class='small'>($1X)</span>")
+                    .replace(/([A-G])b/g, "$1♭")
+                    .replace(/([A-G])#/g, "$1♯")
+                    .replace(/b5/g, "♭5")
+                    .replace(/b9/g, "♭9")
+                    .replace(/b13/g, "♭13")
+                    .replace(/#5/g, "♯5")
+                    .replace(/#9/g, "♯9")
+                    .replace(/#11/g, "♯11")
+                    .replace(/&rdquo;/g, '"')
+                    .trim();
+                p.className = "chords";
+            } else if (l[0] == "!") {
+                l = l.slice(1).trim();
+                p.className = "chorus";
+            } else if (l[0] == "^") {
+                l = l.slice(1).trim();
+                p.className = "bridge";
+            }
+
+            p.innerHTML = l; 
+            container.append(p);
+        });
+        /*
+    window.lines = lines;
+    $("#music").html(`<div>
+                     ${lines.join("<br />")}
+                     </div>`);
+                     */
+}
+
+function displayABCTune(abc, category) {
     // add extra line for proper spacing
     let lines = abc.trim().split("\n");
     let music_lines = lines.reduce((p, l) => p + l.includes("|"), 0);

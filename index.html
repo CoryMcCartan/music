@@ -9,11 +9,13 @@
         {% for file in site.static_files %}
             {% assign pageurl = page.url | remove: 'index.html' %}
             {% assign tunesurl = page.url | append: 'tunes/' %}
-            {% if file.path contains pageurl and file.extname == ".abc" %}
+            {% if file.path contains pageurl and
+                    file.extname == ".abc" or file.extname == ".txt" %}
                 {% assign n_tunes = n_tunes | plus: 1 %}
                 {% assign name = file.basename | replace: '_', ' ' %}
                 {% assign category = file.path | remove: file.name | remove_first: tunesurl | remove: '/' %}
-                {% assign path = category | append: '/' | append: file.basename %}
+                {% assign path = category | append: '/' 
+                    | append: file.basename | append: file.extname %}
                 <li>
                     <a class="name" href="tune/#{{ path }}" data-path="{{ path }}">
                         {{ name | smartify }}

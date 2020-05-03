@@ -39,8 +39,9 @@ input.search
     border: 1px solid #ccc
 
 #tune-list > ul
-    margin: 0
+    margin: 0 auto
     padding: 0.5em
+    max-width: 800px;
     
     li
         display: flex
@@ -87,6 +88,27 @@ input.search
     display: flex
     margin: 0.75em
     justify-content: center
+
+    p.title
+        margin: 0 0 0.25em
+        font-size: 1.5em
+        text-align: center
+        font-weight: bold
+        text-transform: uppercase
+    p
+        margin: 0 0 0 1em;
+        text-indent: -1em;
+        min-height: 1.5em;
+    .chords
+        font-family: "Courier", "Helvetica Neue", "Arial Unicode MS"
+        font-size: 1.15em
+        letter-spacing: -1px
+    .chorus
+        font-weight: bold
+    .bridge
+        font-style: italic
+    .small
+        font-size: 0.7em;
 
 svg
     max-width: 740px
@@ -142,3 +164,7 @@ a
 
 a:hover, a:active
     text-decoration: underline
+
+@media screen and (max-width: 600px)
+    #music p.title
+        font-size: 1.1em
