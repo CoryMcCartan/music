@@ -66,6 +66,7 @@ function renderTextTune(container, text, path, direction=0) {
             l = transposeChords(l.slice(1), direction)
                 .replace(/( +)?-( +)?/g, " - ")
                 .replace(/,/g, "<span style='text-shadow: 0 1px 0 black;'>&darr;</span>")
+                .replace(/\^/g, "<span style='text-shadow: 0 1px 0 black;'>&uarr;</span>")
                 .replace(/\/\//g, `<span style='letter-spacing: -6px; top: 2px;
                          font-weight: bold; font-size: 1.2em;'>//</span>`)
                 .replace(/ \/( |$)/g, `<span style='font-weight: bold; top: 2px;
