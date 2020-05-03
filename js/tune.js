@@ -50,6 +50,7 @@ function renderTextTune(container, text, path, direction=0) {
     let title_el = document.createElement("p");
     title_el.className = "title";
     title_el.innerHTML = title;
+    smarten(title_el);
     container.append(title_el);
 
     text.split("\n")
