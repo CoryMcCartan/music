@@ -13,7 +13,8 @@ function onLoad(e) {
 
 async function loadTune(path) {
     let category = path.split("/")[0];
-    let type = path.split("/")[1].split(".")[1];
+    let parts = path.split("/")[1].split(".")
+    let type = parts.pop();
     path = `../tunes/${path}`;
 
     let request = await fetch(path);
@@ -22,7 +23,7 @@ async function loadTune(path) {
     if (type == "abc") {
         displayABCTune(text, category);
     } else {
-        displayTextTune(text, path);
+        displayTextTune(text, parts.join("."));
     }
 }
 
@@ -42,10 +43,10 @@ function displayTextTune(text, path) {
     });
 }
 
-function renderTextTune(container, text, path, direction=0) {
+function renderTextTune(container, text, title, direction=0) {
     container.innerHTML = null;
 
-    let title = path.split("/")[3].split(".")[0].replace(/_/g, " ");
+    title = title.replace(/_/g, " ");
     document.title = title;
     let title_el = document.createElement("p");
     title_el.className = "title";
