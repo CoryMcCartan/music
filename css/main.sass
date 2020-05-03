@@ -2,6 +2,7 @@
 ---
 
 $font: "Playfair Display", "Palatino", serif
+$font-mono: "Courier Override", "Courier", "Arial Unicode MS", monospace
 
 *
     position: relative
@@ -50,6 +51,8 @@ input.search
         margin: 0.5em 0
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.2)
         border-radius: 3px
+    li.txt
+        border-right: 2px solid #aaa
 
     a
         flex-grow: 1
@@ -65,19 +68,31 @@ input.search
 .category
     font-size: 0.6em
     padding: 0.35em 0.5em 0.25em
-    font-family: "Courier", "Courier Prime", "Courier New", monospace
+    font-family: $font-mono
     font-weight: bold
     border-radius: 3px
     color: white
     background: #888
 
 .category.christmas
-    background: #c00
+    background: #2b0
+.category.union
+    background: #d12
 .category.fiddle
     background: #47e
 .category.jazz
     background: #cc0
     color: black
+.category.other
+    background: #888
+.category.all
+    background: #444
+
+button.category
+    font-size: 0.9em
+    margin: 0.4em
+    border: 1px solid #444
+    outline: none
 
 #extra-links a
     display: block
@@ -86,8 +101,10 @@ input.search
         
 #music
     display: flex
-    margin: 0.75em
-    justify-content: center
+    flex-direction: column
+    max-width: 800px
+    margin: 0.75em auto
+    padding: 0 0.4em
 
     p.title
         margin: 0 0 0.25em
@@ -100,12 +117,9 @@ input.search
         text-indent: -1em
         min-height: 1.5em
     .chords
-        font-family: "Courier", "Courier Prime", "Helvetica Neue", "Arial Unicode MS", monospace
+        font-family: $font-mono
         font-size: 1.15em
-        letter-spacing: -0.8px
-        transform: scaleX(0.95)
-        width: calc(104% - 0.25em)
-        transform-origin: 0 0
+        letter-spacing: -2px
     .chorus
         font-weight: bold
     .bridge
@@ -114,15 +128,17 @@ input.search
         font-size: 0.7em
     .spacer
         display: inline-block
-        width: 3px
+        width: 1.7px
+
+.sheet-music
+    overflow: visible !important
 
 svg
-    max-width: 740px
-    overflow: visible !important
+    max-width: 800px
 
     .abcjs-chord
         transform: translate(-0.2em, 0.85em)
-        font-family: "Courier", "Courier Prime", "Helvetica Neue", "Arial Unicode MS", monospace
+        font-family: $font-mono
         font-size: 18px
         text-anchor: start !important
 
@@ -171,6 +187,39 @@ a
 a:hover, a:active
     text-decoration: underline
 
+#buttons
+    display: flex
+
+    button
+        flex-grow: 1
+        margin: 0.25em
+        outline: none
+        padding: 0.5em
+        background-color: #fff
+        border: 1px solid #aaa
+        border-radius: 2px
+        font-size: 1.5rem
+    button:active, button:hover
+        background-color: #f4f4f4
+
+button:hover
+    cursor: pointer
+
+#wrap input
+    height: 20px
+    width: 20px
+    top: 5px
+
 @media screen and (max-width: 600px)
     #music p.title
         font-size: 1.1em
+    #music .chords
+        font-size: 1.08em
+
+@font-face 
+    font-family: "Courier Override"
+    src: url("../assets/courier.ttf")
+@font-face 
+    font-family: "Courier Override"
+    font-weight: bold
+    src: url("../assets/courier-bold.ttf")

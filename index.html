@@ -4,6 +4,14 @@
 <section id="tune-list">
     <input class="search" placeholder="Search" type="search" 
         autocomplete="off" spellcheck="false" autocorrect="off"/>
+    <div style="display: flex; flex-wrap: wrap; width: 100%; justify-content: center;">
+        <button class="category all">All</button>
+        <button class="category jazz">Jazz</button>
+        <button class="category fiddle">Fiddle</button>
+        <button class="category christmas">Christmas</button>
+        <button class="category union">Union</button>
+        <button class="category other">Other</button>
+    </div>
     <ul class="list">
         {% assign n_tunes = 0 %}
         {% for file in site.static_files %}
@@ -16,7 +24,7 @@
                 {% assign category = file.path | remove: file.name | remove_first: tunesurl | remove: '/' %}
                 {% assign path = category | append: '/' 
                     | append: file.basename | append: file.extname %}
-                <li>
+                <li class="{{ file.extname | remove: '.' }}">
                     <a class="name" href="tune/#{{ path }}" data-path="{{ path }}">
                         {{ name | smartify }}
                     </a>

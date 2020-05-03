@@ -1,5 +1,6 @@
 function onLoad(e) {
     let tunePath = location.hash.slice(1);
+    window.transpose = 0;
 
     if (tunePath.length === 0) {
         location.pathname = "/music/"
@@ -18,15 +19,31 @@ async function loadTune(path) {
     let request = await fetch(path);
     let text = await request.text();
 
-    if (type == "abc")
+    if (type == "abc") {
         displayABCTune(text, category);
-    else
+    } else {
         displayTextTune(text, path);
+    }
 }
 
 function displayTextTune(text, path) {
     let container = document.createElement("div");
-    $("#music").append(container);
+    $("#music").prepend(container);
+
+    renderTextTune(container, text, path);
+
+    $("#tr_down").on("click", function() {
+        window.transpose--;
+        renderTextTune(container, text, path, -1);
+    });
+    $("#tr_up").on("click", function() {
+        window.transpose++;
+        renderTextTune(container, text, path, 1);
+    });
+}
+
+function renderTextTune(container, text, path, direction=0) {
+    container.innerHTML = null;
 
     let title = path.split("/")[3].split(".")[0].replace(/_/g, " ");
     document.title = title;
@@ -35,52 +52,75 @@ function displayTextTune(text, path) {
     title_el.innerHTML = title;
     container.append(title_el);
 
-    let lines = text.split("\n")
-        .map(l => {
-            l = l.replace(/'/g, "&rsquo;")
-                    .replace(/" /g, "&rdquo; ")
-                    .replace(/"$/g, "&rdquo;")
-                    .replace(/_(\w)/g, "<span style='text-decoration: underline;'>$1</span>")
-                    .replace(/"/g, "&ldquo;");
-            let p = document.createElement("p");
+    text.split("\n")
+    .map(l => {
+        l = l.replace(/'/g, "&rsquo;")
+        .replace(/" /g, "&rdquo; ")
+        .replace(/"$/g, "&rdquo;")
+        .replace(/_(\w)/g, "<span style='text-decoration: underline;'>$1</span>")
+        .replace(/"/g, "&ldquo;");
+        let p = document.createElement("p");
 
-            if (l[0] == "#") {
-                l = l.slice(1)
-                    .replace(/( +)?-( +)?/g, " - ")
-                    .replace(/,/g, "<span style='text-shadow: 0 1px 0 black;'>&darr;</span>")
-                    .replace(/\/\//g, `<span style='letter-spacing: -6px; top: 3px;
-                             font-weight: bold; font-size: 1.2em;'>//</span>`)
-                    .replace(/ \/( |$)/g, `<span style='font-weight: bold; top: 3px;
-                             font-size: 1.2em; padding: 0 0.3em;'>/</span>`)
-                    .replace(/ \)/g, ")")
-                    .replace(/\( /g, "(")
-                    .replace(/~/g, "/")
-                    .replace(/maj/g, "∆")
-                    .replace(/dim/g, "°")
-                    .replace(/\(([0-9])[xX]\)/g, "<span class='small'>($1X)</span>")
-                    .replace(/([A-G])b/g, "$1♭")
-                    .replace(/([A-G])#/g, "$1♯")
-                    .replace(/(\S)([A-G])/g, "$1<span class='spacer'></span>$2")
-                    .replace(/b5/g, "♭5")
-                    .replace(/b9/g, "♭9")
-                    .replace(/b13/g, "♭13")
-                    .replace(/#5/g, "♯5")
-                    .replace(/#9/g, "♯9")
-                    .replace(/#11/g, "♯11")
-                    .replace(/&rdquo;/g, '"')
-                    .trim();
-                p.className = "chords";
-            } else if (l[0] == "!") {
-                l = l.slice(1).trim();
-                p.className = "chorus";
-            } else if (l[0] == "^") {
-                l = l.slice(1).trim();
-                p.className = "bridge";
-            }
+        if (l[0] == "#") {
+            l = transposeChords(l.slice(1), direction)
+                .replace(/( +)?-( +)?/g, " - ")
+                .replace(/,/g, "<span style='text-shadow: 0 1px 0 black;'>&darr;</span>")
+                .replace(/\/\//g, `<span style='letter-spacing: -6px; top: 2px;
+                         font-weight: bold; font-size: 1.2em;'>//</span>`)
+                .replace(/ \/( |$)/g, `<span style='font-weight: bold; top: 2px;
+                                  font-size: 1.2em; padding: 0 0.3em;'>/</span>`)
+                .replace(/ \)/g, ")")
+                .replace(/\( /g, "(")
+                .replace(/~/g, "/")
+                .replace(/maj/g, "∆")
+                .replace(/dim/g, "°")
+                .replace(/\(([0-9])[xX]\)/g, "<span class='small'>($1X)</span>")
+                .replace(/([A-Gm1-9♭♯∆°])(?=[A-G])/g, "$1<span class='spacer'></span>")
+                .replace(/([A-Gm1-9♭♯∆°])(?=[A-Gm1-9♭♯∆°])/g, "$1<span class='spacer'></span>")
+                .replace(/b5/g, "♭5")
+                .replace(/b9/g, "♭9")
+                .replace(/b13/g, "♭13")
+                .replace(/#5/g, "♯5")
+                .replace(/#9/g, "♯9")
+                .replace(/#11/g, "♯11")
+                .replace(/&rdquo;/g, '"')
+                .trim();
+            p.className = "chords";
+        } else if (l[0] == "!") {
+            l = l.slice(1).trim();
+            p.className = "chorus";
+        } else if (l[0] == "^") {
+            l = l.slice(1).trim();
+            p.className = "bridge";
+        }
 
-            p.innerHTML = l; 
-            container.append(p);
-        });
+        p.innerHTML = l; 
+        container.append(p);
+    });
+}
+
+function transposeChords(chords, direction=0) {
+    const flat_notes = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+    const sharp_notes = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
+    const lookup = {"C": 0, "C♯": 1, "D♭": -1, "D": -2, "D♯": 3, "E♭": -3, 
+        "E": -4, "F": 5, "F♯": 6, "G♭": -6, "G": -7, "G♯": 8, "A♭": -8, 
+        "A": -9, "A♯": 10, "B♭": -10, "B": -11};
+    let replacer = function(chord, base, extra, offset, string) {
+        if (window.transpose == 0) return chord;
+        let matched = lookup[base];
+        let idx = Math.abs(matched) + window.transpose;
+        if (idx < 0) idx += 12;
+        if (idx > 11) idx -= 12;
+        if (direction != 0)
+            return newchord = (direction > 0 ? sharp_notes : flat_notes)[idx] 
+                + (extra || "");
+        else 
+            return newchord = (matched > 0 ? sharp_notes : flat_notes)[idx] 
+                + (extra || "");
+    };
+    return chords.replace(/([A-G])b/g, "$1♭")
+                 .replace(/([A-G])#/g, "$1♯")
+                 .replace(/([A-G][♯♭]?)([maj1-9∆°][maj1-9♯♭∆°]*)?/g, replacer);
 }
 
 function displayABCTune(abc, category) {
@@ -108,22 +148,53 @@ function displayABCTune(abc, category) {
     abc = header + "\n" + music + "\n|";
     window.abc = abc;
 
-    let output = document.createElement("svg");
+    let output = document.createElement("div");
     output.className = "sheet-music";
+    $("#music").prepend(output);
 
+    renderABC(output, abc, category, music_lines);
+
+    // interface
+    $("#wrap").show();
+    $("#wrap input").get()[0].checked = 'wrap' in localStorage ? 
+        !!(+localStorage.wrap) : true;
+    $("#wrap input").on("click", function() {
+        if ('wrap' in localStorage)
+            localStorage.wrap = 1 - localStorage.wrap;
+        else
+            localStorage.wrap = 0;
+        renderABC(output, abc, category, music_lines);
+    });
+    $("#tr_down").on("click", function() {
+        window.transpose--;
+        renderABC(output, abc, category, music_lines);
+    });
+    $("#tr_up").on("click", function() {
+        window.transpose++;
+        renderABC(output, abc, category, music_lines);
+    });
+}
+
+function renderABC(el, abc, category, music_lines) {
     let width = Math.min(800, document.body.getBoundingClientRect().width);
-    window.rendered = ABCJS.renderAbc(output, abc, {}, {
-        scale: innerWidth <= 600 ? 1.25 : 1.0,
+    let small = innerWidth <= 600;
+    let wrap = 'wrap' in localStorage ? !!(+localStorage.wrap) : true;
+    console.log(wrap);
+
+    ABCJS.renderAbc(el, abc, {}, {
+        scale: small ? 1.25 : 1.0,
+        staffwidth: wrap ? (small ? 1.4 : 1.0) * width : null,
+        wrap: wrap,
         paddingtop: 15,
         paddingbottom: 0,
         paddingleft: 0,
         paddingright: 0,
+        visualTranspose: window.transpose,
         add_classes: true,
         responsive: "resize",
     });
-    smarten(output);
-
-    $("#music").html(output);
+    smarten(el);
+    
     // cleanup
     $(".sheet-music tspan").attr("dy", 0);
     $(".sheet-music tspan:nth-child(2)").attr("dy", 15);
@@ -131,6 +202,8 @@ function displayABCTune(abc, category) {
     $(".abcjs-l" + music_lines).css("display", "none");
     if (category === "jazz" | category === "christmas") 
         $(".abcjs-chord").addClass("jazz");
+
+    return el;
 }
 
 async function playTune() {

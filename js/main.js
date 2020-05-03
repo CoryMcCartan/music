@@ -5,11 +5,20 @@ function onLoad(e) {
         valueNames: ["name", "category"],
     });
     list.sort("name");
+    window.list = list;
 
     $(".search").on("keypress", function(e) {
         if (e.keyCode !== 13) return;
         $("#tune-list a").get(0).click()
     });
+
+    $("button.category").on("click", function() {
+        let category = this.className.replace("category", "").trim();
+        if (category == "all") 
+            list.filter();
+        else 
+            list.filter(s => s.values().category == category.toUpperCase());
+    })
 }
 
 document.addEventListener("DOMContentLoaded", onLoad);
