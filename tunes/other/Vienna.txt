@@ -1,3 +1,7 @@
+[Intro/Outro]
+# Bb+- Bb7#5~Ab- Adim7- Eb~Bb- 
+# Cm7b5~Gb- F7- Bb---
+
 Slow down, you crazy child
 You're so ambitious for a juvenile
 But then if you're so smart, 
@@ -42,3 +46,5 @@ You _can't always see when you're right, you're right
 
 When will you _realize, Vienna waits for you?
 # G7- Gb9- F- Bb---
+
+[Intro/Outro]
