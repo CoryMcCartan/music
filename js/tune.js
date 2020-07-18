@@ -9,6 +9,15 @@ function onLoad(e) {
     loadTune(tunePath);
 
     $("#play").on("click", playTune);
+
+    new QRCode($("#qr").get(0), {
+        text: window.location.href,
+        width: 256,
+        height: 256,
+        colorDark : "#442222",
+        colorLight : "#ffffff00",
+        correctLevel : QRCode.CorrectLevel.M
+    });
 }
 
 async function loadTune(path) {
