@@ -1,6 +1,17 @@
 function onLoad(e) {
     let tunePath = location.hash.slice(1);
-    window.transpose = 0;
+    window.query = new URLSearchParams(location.search);
+
+    window.globalOpts = "opts" in localStorage ? JSON.parse(localStorage.opts) : {};
+    let key = tunePath.split("/")[1].split("?")[0];
+    if (!(key in globalOpts))
+        globalOpts[key] = {
+            transpose: 0,
+        };
+    window.opts = globalOpts[key];
+
+    opts.transpose = +query.get("transpose") || opts.transpose || 0;
+    $("#tr-amt").html(fmtTranspose(opts.transpose));
 
     if (tunePath.length === 0) {
         location.pathname = "/music/"
@@ -8,16 +19,31 @@ function onLoad(e) {
 
     loadTune(tunePath);
 
-    $("#play").on("click", playTune);
+    history.replaceState(null, "", location.pathname + location.hash);
 
-    new QRCode($("#qr").get(0), {
-        text: window.location.href,
+    $("#play").on("click", playTune);
+    setTimeout(makeQR, 500);
+}
+
+function makeQR(sel="#qr") {
+    let el = $(sel).get(0);
+    el.innerHTML = "";
+
+    let qrobj = {
+        text: location.href, 
         width: 256,
         height: 256,
         colorDark : "#442222",
         colorLight : "#ffffff00",
         correctLevel : QRCode.CorrectLevel.M
-    });
+    };
+
+    if (opts.transpose != 0) {
+        qrobj.text = `${location.origin}${location.pathname}?transpose=${opts.transpose}` +
+            `&direction=${opts.direction || 0}${location.hash}`;
+    }
+
+    new QRCode(el, qrobj);
 }
 
 async function loadTune(path) {
@@ -43,17 +69,24 @@ function displayTextTune(text, path) {
     renderTextTune(container, text, path);
 
     $("#tr_down").on("click", function() {
-        window.transpose--;
+        opts.transpose--;
         renderTextTune(container, text, path, -1);
+        makeQR();
     });
     $("#tr_up").on("click", function() {
-        window.transpose++;
+        opts.transpose++;
         renderTextTune(container, text, path, 1);
+        makeQR();
     });
 }
 
 function renderTextTune(container, text, title, direction=0) {
     container.innerHTML = null;
+    
+    direction = direction || +query.get("direction") || opts.direction;
+    $("#tr-amt").html(fmtTranspose(opts.transpose));
+    opts.direction = direction;
+    localStorage.opts = JSON.stringify(globalOpts);
 
     title = title.replace(/_/g, " ");
     document.title = title;
@@ -118,9 +151,9 @@ function transposeChords(chords, direction=0) {
         "E": -4, "F": 5, "F♯": 6, "G♭": -6, "G": -7, "G♯": 8, "A♭": -8, 
         "A": -9, "A♯": 10, "B♭": -10, "B": -11};
     let replacer = function(chord, base, extra, offset, string) {
-        if (window.transpose == 0) return chord;
+        if (opts.transpose == 0) return chord;
         let matched = lookup[base];
-        let idx = Math.abs(matched) + window.transpose;
+        let idx = Math.abs(matched) + opts.transpose;
         if (idx < 0) idx += 12;
         if (idx > 11) idx -= 12;
         if (direction != 0)
@@ -178,12 +211,14 @@ function displayABCTune(abc, category) {
         renderABC(output, abc, category, music_lines);
     });
     $("#tr_down").on("click", function() {
-        window.transpose--;
+        opts.transpose--;
         renderABC(output, abc, category, music_lines);
+        makeQR();
     });
     $("#tr_up").on("click", function() {
-        window.transpose++;
+        opts.transpose++;
         renderABC(output, abc, category, music_lines);
+        makeQR();
     });
 }
 
@@ -191,7 +226,9 @@ function renderABC(el, abc, category, music_lines) {
     let width = Math.min(800, document.body.getBoundingClientRect().width);
     let small = innerWidth <= 600;
     let wrap = 'wrap' in localStorage ? !!(+localStorage.wrap) : true;
-    console.log(wrap);
+
+    $("#tr-amt").html(fmtTranspose(opts.transpose));
+    localStorage.opts = JSON.stringify(globalOpts);
 
     ABCJS.renderAbc(el, abc, {}, {
         scale: small ? 1.25 : 1.0,
@@ -201,7 +238,7 @@ function renderABC(el, abc, category, music_lines) {
         paddingbottom: 0,
         paddingleft: 0,
         paddingright: 0,
-        visualTranspose: window.transpose,
+        visualTranspose: opts.transpose,
         add_classes: true,
         responsive: "resize",
     });
@@ -257,6 +294,17 @@ function smarten(el) {
         el.innerHTML = rep(el.innerHTML);
     }
 };
+
+function fmtTranspose(semi) {
+    if (semi == 0) return "original";
+    let str = semi < 0 ? "down " : "up ";
+    if (Math.abs(semi) == 1) return str + "½ step";
+    if (Math.abs(semi) == 2) return str + "1 step";
+    str += Math.floor(Math.abs(semi/2));
+    if (semi % 2 != 0) str += "½";
+    return str + " steps";
+}
+
 
 window.SynthSequence = (function() {
 	let self = {};
