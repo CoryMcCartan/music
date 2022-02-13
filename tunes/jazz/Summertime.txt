@@ -1,8 +1,8 @@
 [Intro]
-# Am6 E7~B / Am6 E7~B / Am6 E7~B / Bm7 E+7
+# Am6 E7~B (3x) Bm7 E+7
 
 Summer_time and the _livin' is _easy
-Fish are _jumpin' nd the cotton is high
+Fish are _jumpin' and the cotton is high
 Oh, your _daddy's rich and your _ma is good-lookin'
 So _hush, little baby d_on't you cry
 # Am6 E7~B (3x) Am6 A+7 / 
@@ -10,10 +10,7 @@ So _hush, little baby d_on't you cry
 # Am6 E7~B (3x) Am6 D7 / 
 # G~C Am7 D7 G11 Am (D7 Bm7 E+7) /
 
-One of these mornings
-You're going to rise up singing
-Then you'll spread your wings
-And you'll take the sky
-But 'til that morning
-There's a'nothing can harm you
+One of these mornings you're going to rise up singing
+Then you'll spread your wings and you'll take the sky
+But 'til that morning there's a'nothing can harm you
 With daddy and mammy standing by
