@@ -250,8 +250,10 @@ function renderABC(el, abc, category, music_lines) {
     $(".sheet-music tspan:nth-child(2)").attr("dy", 15);
     $("title").html($(".sheet-music .abcjs-title").text());
     $(".abcjs-l" + music_lines).css("display", "none");
-    if (category === "jazz" | category === "christmas") 
+    if (category === "jazz" | category === "christmas") {
         $(".abcjs-chord").addClass("jazz");
+        $(".abcjs-annotation").addClass("jazz");
+    }
 
     return el;
 }
