@@ -240,6 +240,7 @@ function renderABC(el, abc, category, music_lines) {
         paddingright: 0,
         visualTranspose: opts.transpose,
         add_classes: true,
+        jazzchords: category === "jazz",
         responsive: "resize",
     });
     smarten(el);

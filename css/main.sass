@@ -136,6 +136,7 @@ button.category
 
 svg
     max-width: 800px
+    overflow: visible
 
     .abcjs-chord
         transform: translate(-0.2em, 0.85em)
@@ -172,6 +173,29 @@ svg
 
     path.abcjs-ending
         transform: translate(-0.2em, -0.15em)
+        stroke-width: 2px
+        stroke-linecap: square
+
+    .abcjs-bar
+        stroke: black
+        stroke-width: 1.5px
+        stroke-linejoin: round
+        transform: scale(1.3, 1)
+        transform-box: fill-box
+        transform-origin: center
+
+    .abcjs-note, .abcjs-rest, .abcjs-slur
+        stroke: black
+        stroke-width: 0.5px
+        stroke-linejoin: round
+
+    .abcjs-staff-extra
+        stroke: black
+        stroke-width: 0.4px
+
+    text.abcjs-annotation.jazz, text.abcjs-ending.jazz
+        font-family: "Caveat Brush","Helvetica Neue","Arial Unicode MS"
+        font-size: 1.25em
 
 svg.chords-only
     .abcjs-chord
