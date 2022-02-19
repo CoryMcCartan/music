@@ -50,17 +50,17 @@ this.addEventListener("fetch", e => {
     } else {
         e.respondWith(
             fetch(e.request).then(resp => {
-                if (resp) {
-                    return caches.open(VERSION).then(cache => {
-                        cache.put(e.request, resp.clone());
-                        return resp;
-                    });
-                } else {
-                    return caches.match(e.request)
+                if (!resp || resp.status !== 200 || resp.type !== 'basic') {
+                    return resp;
                 }
+
+                caches.open(VERSON).then(function(cache) {
+                    cache.put(e.request, resp.clone());
+                });
+
+                return resp;
             }).catch(err => {
-                console.log(err);
-                return err;
+                return caches.match(e.request);
             })
         );
     }
