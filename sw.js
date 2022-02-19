@@ -1,5 +1,5 @@
 const VERSION = "v2";
-const BASEURL = "https://corymccartan.github.io/music/";
+const BASEURL = "/music/";
 
 let STATIC_CACHE = [
     BASEURL + "icon.png",
@@ -12,6 +12,10 @@ let STATIC_CACHE = [
     "https://fonts.googleapis.com/css?family=Caveat+Brush",
 ];
 
+let STATIC_URLs = STATIC_CACHE.map(url => {
+    return !url.startsWith(BASEURL) ? url : url + "https://corymccartan.github.io";
+});
+
 this.addEventListener("install", function(e) {
     e.waitUntil(
         caches.open(VERSION).then(function(cache) {
@@ -22,13 +26,13 @@ this.addEventListener("install", function(e) {
 });
 
 this.addEventListener("fetch", e => {
-    if (STATIC_CACHE.includes(e.request.url)) {
+    if (STATIC_URLs.includes(e.request.url)) {
         e.respondWith(
             caches.match(e.request).then(resp => {
                 if (resp) return response;
 
                 return fetch(e.request).then(resp => {
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                    if (!resp || resp.status !== 200 || resp.type !== 'basic') {
                         return response;
                     }
 
