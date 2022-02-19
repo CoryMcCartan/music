@@ -1,12 +1,14 @@
-const VERSION = "v1";
-const BASEURL = "/music/";
+const VERSION = "v2";
+const BASEURL = "https://corymccartan.github.io/music/";
 
 let STATIC_CACHE = [
     BASEURL + "icon.png",
     BASEURL + "js/abc.js",
     BASEURL + "js/list.js",
+    BASEURL + "js/qrcode.min.js",
     "https://code.jquery.com/jquery-3.2.1.slim.min.js",
-    "https://fonts.googleapis.com/css?family=Playfair+Display:400,700",
+    "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap",
     "https://fonts.googleapis.com/css?family=Caveat+Brush",
 ];
 
@@ -19,19 +21,44 @@ this.addEventListener("install", function(e) {
     
 });
 
-this.addEventListener("fetch", function(e) {
-    e.respondWith(
-        fetch(e.request).then(function(resp) {
-            if (resp) {
-                return caches.open(VERSION).then(function(cache) {
-                    cache.put(e.request, resp.clone());
-                    return resp;
+this.addEventListener("fetch", e => {
+    if (STATIC_CACHE.includes(e.request.url)) {
+        e.respondWith(
+            caches.match(e.request).then(resp => {
+                if (resp) return response;
+
+                return fetch(e.request).then(resp => {
+                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                        return response;
+                    }
+
+                    var responseToCache = response.clone();
+
+                    caches.open(VERSON).then(function(cache) {
+                        cache.put(e.request, responseToCache);
+                    });
+
+                    return response;
                 });
-            } else {
-                return caches.match(e.request)
-            }
-        })
-    );
+            })
+        );
+    } else {
+        e.respondWith(
+            fetch(e.request).then(resp => {
+                if (resp) {
+                    return caches.open(VERSION).then(cache => {
+                        cache.put(e.request, resp.clone());
+                        return resp;
+                    });
+                } else {
+                    return caches.match(e.request)
+                }
+            }).catch(err => {
+                console.log(err);
+                return err;
+            })
+        );
+    }
 });
 
 this.addEventListener("activate", function(e) {
@@ -45,3 +72,4 @@ this.addEventListener("activate", function(e) {
         })
     );
 });
+if (e.request.url in STATIC_CACHE]
