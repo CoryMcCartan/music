@@ -72,4 +72,3 @@ this.addEventListener("activate", function(e) {
         })
     );
 });
-if (e.request.url in STATIC_CACHE]
