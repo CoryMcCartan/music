@@ -36,8 +36,9 @@ this.addEventListener("fetch", e => {
                         return resp;
                     }
 
-                    caches.open(VERSON).then(function(cache) {
-                        cache.put(e.request, resp.clone());
+                    resp_cache = resp.clone()
+                    caches.open(VERSION).then(function(cache) {
+                        cache.put(e.request, resp_cache);
                     });
 
                     return resp;
@@ -54,8 +55,9 @@ this.addEventListener("fetch", e => {
                     return resp;
                 }
 
-                caches.open(VERSON).then(function(cache) {
-                    cache.put(e.request, resp.clone());
+                resp_cache = resp.clone()
+                caches.open(VERSION).then(function(cache) {
+                    cache.put(e.request, resp_cache);
                 });
 
                 return resp;
