@@ -13,7 +13,7 @@ let STATIC_CACHE = [
 ];
 
 let STATIC_URLs = STATIC_CACHE.map(url => {
-    return !url.startsWith(BASEURL) ? url : url + "https://corymccartan.github.io";
+    return !url.startsWith(BASEURL) ? url : "https://corymccartan.github.io" + url;
 });
 
 this.addEventListener("install", function(e) {
