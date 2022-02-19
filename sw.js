@@ -2,7 +2,7 @@ const VERSION = "v2";
 const BASEURL = "/music/";
 
 let STATIC_CACHE = [
-    BASEURL + "icon.png",
+    BASEURL + "assets/icon.png",
     BASEURL + "js/abc.js",
     BASEURL + "js/list.js",
     BASEURL + "js/qrcode.min.js",
@@ -29,20 +29,21 @@ this.addEventListener("fetch", e => {
     if (STATIC_URLs.includes(e.request.url)) {
         e.respondWith(
             caches.match(e.request).then(resp => {
-                if (resp) return response;
+                if (resp) return resp;
 
                 return fetch(e.request).then(resp => {
                     if (!resp || resp.status !== 200 || resp.type !== 'basic') {
-                        return response;
+                        return resp;
                     }
 
-                    var responseToCache = response.clone();
-
                     caches.open(VERSON).then(function(cache) {
-                        cache.put(e.request, responseToCache);
+                        cache.put(e.request, resp.clone());
                     });
 
-                    return response;
+                    return resp;
+                }).catch(err => {
+                    console.log(err);
+                    return err;
                 });
             })
         );
