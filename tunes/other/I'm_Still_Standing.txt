@@ -1,5 +1,5 @@
 [Intro]
-# Am- Dm~A- E~A- E~A F~AG~A /  /
+# Am- Dm~A- E~A-- F~AG~A /  /
 
 You could never know _what it's like
 Your b_lood, like winter, freezes j_ust like ice
@@ -10,7 +10,8 @@ Well look at me, I'm a-comin' back again
 I got a taste of love in a simple way
 And if you need to know while I'm still standin'
 You just fade away
-# (2x) A- D~A- / E~A- A- / Bm7~A- D~A E / F#m- D- ABm~A A--
+# A- D~A- / E~A- A- / 
+# Bm7~A- D~A E / F#m- D- ABm~A A-- ://
 
 !Don't you know _I'm still standin' better than I ever did?
 !Lookin' like a _true survivor, feelin' like a little kid
@@ -19,7 +20,7 @@ You just fade away
 !I'm still _standin' (yeah, yeah, yeah)
 !I'm still _standin' (yeah, yeah, yeah)
 # Am7- Am- Em~G--- / Dm7--- Fmaj7- G- /
-# Am7- Am- Em~G--- / Dm7--- E7--- /
+# " / Dm7--- E7--- /
 # Am- Dm7- E7--- / Am- Dm7- E7-- F~EG~E
 
 Once, I never coulda hoped to win
