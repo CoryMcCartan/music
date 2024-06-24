@@ -4,15 +4,18 @@
 !And ain't it just like a friend of mine to hit me from behind?
 !Yes, I'm gone to Carolina in my mind
 # D- G G~F# Em- A7- / G- A7- Em7- A7- 
-# D D~C# Bm D~A G D~F# Em7 A7 / D Bm Em7 A7 D---
+# D D~C# Bm D~A G D~F# Em7 A7
+# D Bm Em7 A7 D---
 
 Karen, she's a silver sun
 You best walk her way and watch it shine
 Watch her watch the morning come
 A silver tear appearing now I'm crying, ain't I?
 I'm gone to Carolina in my mind
-# D- C2- / G G~F# Em A7(A#dim) / Bm- G- A7sus4 A7 
-# G- D~F#- Esus4 E A7- / D Bm Em7 A7 D---
+# D- C2- / G G~F# Em A7(A#dim) / 
+# Bm- G- A7sus4 A7 
+# G- D~F#- Esus4 E A7- 
+# D Bm Em7 A7 D---
 
 There ain't no doubt in no one's mind
 That love's the finest thing around
