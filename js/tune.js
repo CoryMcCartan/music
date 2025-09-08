@@ -248,6 +248,8 @@ function renderABC(el, abc, category, music_lines) {
     // cleanup
     $(".sheet-music tspan").attr("dy", 0);
     $(".sheet-music tspan:nth-child(2)").attr("dy", 15);
+    $(".sheet-music tspan:nth-child(3)").attr("dy", 15);
+    $(".sheet-music tspan:nth-child(4)").attr("dy", 15);
     $("title").html($(".sheet-music .abcjs-title").text());
     $(".abcjs-l" + music_lines).css("display", "none");
     if (category === "jazz" | category === "christmas") {

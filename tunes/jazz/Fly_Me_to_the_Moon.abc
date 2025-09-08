@@ -1,11 +1,21 @@
 X: 1
 T: Fly Me to the Moon
 M: c
-L: 4/4
+L: 1/4
 K: C
-"Am7"x|"Dm7"x|"G7"x|"C"x/"C7"x/|
-"F"x|"Bm7b5"x|"E7"x|"Am"x/"A7"x/|
-[1"Dm7"x|"G7"x|"C"x|"Am"x|
-"Dm7"x|"G7"x|"Fm6"x/"C"x/|"E7"x:|
-[2"Dm7"x|"G7"x|"Em7b5"x|"A7"x|
-"Dm7"x|"G7"x|"C"x|"C"x|]
+"Am7"c>B A G/F/- | "Dm7"F<GAc | "G7"B>A G F/E/- | "C"E4 "C7"x2 |
+w: Fly me to the moon _ and let me play a-mong the * stars
+w: Fill my heart with song _ and let me sing for-ev-er * more
+"F"A>G F E/D/- | "Bm7b5"D<EFA | "E7" ^G>F E D/C/- | "Am"C2"A7"z^C |
+w: Let me see what spring _ is like on Ju-pit-er or Mars _ In
+w: You are all I long _ for all I wor-ship and a-dore _ In
+[1"Dm7" D/AA/-A2- | "G7"Ac2B | "Cmaj7" G4- | "Em"G2 "A7"z B, |
+w: oth-er words, hold my hand
+"Dm7" C/FF/-F2- | "G7"FA2G | "Fm6"F>E- "C"E2- | "Bbm7b5"E2 "E7"z2 :|
+w: In oth-er words, _ ba-by, kiss me
+[2"Dm7" D/AA/-A2- | "G7"Ac2B !coda!| "Em"G4- | "A7"G3 ^G |
+w: oth-er words, __ please be true _ In
+"Dm7" A/CC/-C2- | "G7"CC2D | "C"C4 | "(Bbm7b5 E7)"z4 !D.C.!  ||
+w: oth-er words, __ I love you
+!coda!||"Em7"e4- | "A7"e3c | "Dm7"d/AA/-A2- | "G7"A2 Bd | "C6"c4-|czz2 |]
+w: true, _ in oth-er words __ I love you
