@@ -1,19 +1,36 @@
 X: 1
 T: My Favorite Things
 M: 3/4
-L: 3/4
+L: 1/4
 K: Em
-|:"Em7"x|"F#m7"x|"Em7"x|"F#m7"x|
-"Cmaj7"x|x|x|x|
-"Am7"x|"D7"x|"Gmaj7"x|"Cmaj7"x|
-"Gmaj7"x|"Cmaj7"x|"F#m7b5"x|"B7"x:|
-"Emaj7"x|"F#m7"x|"Emaj7"x|"F#m7"x|
-"Amaj7"x|x|x|x| 	
-"Am7"x|"D7"x|"Gmaj7"x|"Cmaj7"x|
-"Gmaj7"x|"Cmaj7"x|"F#m7b5"x|"B7"x||
-"Em"x|x|"F#m7b5"x|"B7"x|
-"Em"x|x|"Cmaj7"x|x|
-"Cmaj7"x|x|"A7"x|x|
-"Gmaj7"x|"Cmaj7"x|x|"D7"x|
-"G6"x|"Cmaj7"x|"G6"x|"Cmaj7"x|
-"Gmaj7"x|"Cmaj7"x|"F#m7b5"x|"B7"x!D.C.!|]
+|:"Em7"EBB|"F#m7"FEE|"Em7"B,EE|"F#m7"FE2|
+w: Rain-drops on ros-es and whis-kers on kit-tens
+w: Cream-col-ored pon-ies and crisp ap-ple strud-els
+"Cmaj7"EBB|FEE|B,EE|FE2|
+w: Bright cop-per ket-tles and warm wool-en mit-tens
+w: Door-bells and sleigh bells and schnit-zel with nood-les
+"Am7"EBA|"D7"EFD|"Gmaj7"DAG|"Cmaj7"C3|
+w: Brown pap-er pack-ag-es tied up with strings
+w: Wild geese that fly with the moon on their wings
+"Gmaj7"B,CD|"Cmaj7"EFG|"F#m7b5"ABA|"B7"^D3:|
+w: These are a few of my fav-or-ite things
+"Emaj7"EBB|"F#m7"FEE|"Emaj7"B,EE|"F#m7"FE2|
+w: Girls in white dress-es with blue sat-in sash-es
+"Amaj7"EBB|FEE|B,EE|FE2|
+w: Snow-flakes that stay in my nose and eye-lash-es
+"Am7"EBA|"D7"EFD|"Gmaj7"DAG|"Cmaj7"C3|
+w: Sil-ver-white wint-ers that melt in-to springs
+"Gmaj7"B,CD|"Cmaj7"EFG|"F#m7b5"A^AB|"B7"c3||
+w: These are a few of my fav-or-ite things
+"Em"zBB|B2E|"F#m7b5"zAA|"B7"A2^D|
+w: When the dog bites When the bee stings
+"Em"zGG|G2B,|"Cmaj7"E3-|E2E|
+w: When I'm feel-ing sad _ I
+"Cmaj7"EFE|FEF|"A7"GAG|A2G|
+w: simp-ly re-mem-ber my fav-or-ite things _ And
+"Gmaj7"BcB|"Cmaj7"c3-|c3|"D7"B3|
+w: then I don't feel _ so
+"G6"G3-|"Cmaj7"G3-|"G6"G3-|"Cmaj7"G3|
+w: bad
+"Gmaj7"z3|"Cmaj7"z3|"F#m7b5"z3|"B7"z3!D.C.!|]
+
